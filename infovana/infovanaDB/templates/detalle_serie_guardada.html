@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="ms-4">
+	<h1>{{detalle_serie.imdbID.title}}</h1>
+	<img src="{{detalle_serie.imdbID.poster}}" alt="Poster">
+	<div>Sinopsis: {{detalle_serie.imdbID.plot}}</div>
+	<div>ImdbID Serie: {{detalle_serie.imdbID.imdbID}}</div>
+	<div>Año de Lanzamiento: {{detalle_serie.imdbID.year}}</div>
+	<div>Genero: {{detalle_serie.imdbID.genre}}</div>
+	<div>Idioma: {{detalle_serie.imdbID.language}}</div>
+	<div>Rating: {{detalle_serie.imdbID.imdbRating}}</div>
+	<div>Número de temporadas: {{detalle_serie.totalSeasons}}</div>
+	<div>
+		<form method="POST">
+			{% csrf_token %}
+			{% if añadido %}
+				<input type="hidden" name="remove" value="remove">
+				<button class="btn btn-danger">Borrar de favoritos ({{cnt_as_favorite_serie}})</button>
+			{% else %}
+				<input type="hidden" name="add" value="add">
+				<button class="btn btn-secondary">Añadir a favoritos ({{cnt_as_favorite_serie}})</button>
+			{% endif %}
+		</form>
+	</div>
+
+	<form method="GET">
+    <label for="temporada">Temporada:</label>
+	    <select name="temporada" id="temporada" onchange="this.form.submit()">
+	        {% for temporada in list_temporadas %}
+	            <option value="{{ temporada }}" {% if temporada == temporada_seleccionada %}selected{% endif %}>
+	                {{ temporada }}
+	            </option>
+	        {% endfor %}
+	    </select>
+	</form>
+
+	<h2>Temporada {{temporada_seleccionada}}</h2>
+	<div class="container mt-1">
+        <div class="row">
+            {% for episodio in episodios_data %}
+            <div class="col-md-2 mt-3">
+                <div class="card bg-dark text-white">
+                    <img src="{{episodio.imdbID.poster}}" class="card-img-top" alt="{{episodio.imdbID.title}}">
+                    <div class="card-body text-center">
+                        <h8 class="card-title">{{detalle_serie.imdbID.title}} {{episodio.season}}x{{episodio.episode}}</h8>
+                        <form action="{% url 'detalle_episodio_guardado' episodio.imdbID.imdbID %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-secondary mt-1">Ver detalle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

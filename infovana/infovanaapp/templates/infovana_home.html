@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py5">
+    <section class="card card-body">
+        <h1 class="display-1 text-center">Infovana App</h1>
+        <h3>Bienvenido {{user.username}}</h3>
+        <p>Infovana App es una aplicación web para la recolección de datos de la API OMDB (la cual es una API de películas) a través de peticiones request, con la finalidad de que el usuario pueda ver el detalle de películas o series y añadirlas como favoritas</p>
+        <div class="ms-5 mt-3"> 
+            <h4>Tecnologías usadas:</h4>
+            <p>-Lenguaje de Programación: Python</p>
+            <p>-Framework: Django</p>
+            <p>-Base de Datos: SQLite</p>
+            <p>-Frontend: HTML, CSS, Bootstrap</p>
+            <p>-Autenticación: Django Authentication</p>
+            <p>-API Externa: OMDB API (usando la librería `requests`)</p>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="text-center">
+            <a class="btn btn-dark" href="/buscar_titulo">Buscar Titulo</a>
+            <a class="btn btn-dark" href="/titulos_guardados">Ver tus titulos favoritos</a>
+        </div>
+
+        {% else %}
+        <div class="text-center">
+            <a class="btn btn-secondary" href="/signin/">Sign-In</a>
+            <a class="btn btn-dark" href="/signup/">Sign-up</a>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

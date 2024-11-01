@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="ms-4">
+	<h1>{{detalle_pelicula.imdbID.title}}</h1>
+	<img src="{{detalle_pelicula.imdbID.poster}}" alt="Poster">
+	<div>Sinopsis: {{detalle_pelicula.imdbID.plot}}</div>
+	<div>ImdbID Pelicula: {{detalle_pelicula.imdbID.imdbID}}</div>
+	<div>Año de Lanzamiento: {{detalle_pelicula.imdbID.year}}</div>
+	<div>Genero: {{detalle_pelicula.imdbID.genre}}</div>
+	<div>Idioma: {{detalle_pelicula.imdbID.language}}</div>
+	<div>Rating: {{detalle_pelicula.imdbID.imdbRating}}</div>
+	<div>Runtime: {{detalle_pelicula.runtime}}</div>
+	<div>
+		<form method="POST">
+			{% csrf_token %}
+			{% if añadido %}
+				<input type="hidden" name="remove" value="remove">
+				<button class="btn btn-danger">Borrar de Favoritos ({{cnt_as_favorite_movie}})</button>
+			{% else %}
+				<input type="hidden" name="add" value='add'>
+				<button class="btn btn-secondary">Añadir a Favoritos ({{cnt_as_favorite_movie}})</button>
+			{% endif %}
+		</form>
+	</div>
+</main>
+{% endblock %}

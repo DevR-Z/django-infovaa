@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+	<h1>Detalle de la serie</h1>
+	<div>Titulo: {{detalle_serie.title}}</div>
+	<img src="{{detalle_serie.poster}}" alt="Poster">
+	<div>Sinopsis: {{detalle_serie.plot}}</div>
+	<div>ImdbID Serie: {{detalle_serie.imdbID}}</div>
+	<div>Año de Lanzamiento: {{detalle_serie.year}}</div>
+	<div>Genero: {{detalle_serie.genre}}</div>
+	<div>Idioma: {{detalle_serie.language}}</div>
+	<div>Rating: {{detalle_serie.imdbRating}}</div>
+	<div>Número de temporadas: {{detalle_serie.totalSeasons}}</div>
+	<div>
+		<form method="POST">
+			{% csrf_token %}
+			{% for key,value in detalle_serie.items %}
+				<input type="hidden" name="{{key}}" value="{{value}}">
+			{% endfor %}
+			{% if añadido %}
+				<input type="hidden" name="remove" value="remove">
+				<button class="btn btn-danger">Borrar de favoritos ({{cnt_as_favorite_serie}})</button>
+			{% else %}
+				<h1>{{pelicula_already_exists}}</h1>
+				<input type="hidden" name="add" value="add">
+				<button class="btn btn-secondary">Añadir a favoritos ({{cnt_as_favorite_serie}})</button>
+			{% endif %}
+		</form>
+	</div>
+
+	<form method="GET">
+    <label for="temporada">Temporada:</label>
+	    <select name="temporada" id="temporada" onchange="this.form.submit()">
+	        {% for temporada in temporadas %}
+	            <option value="{{ temporada }}" {% if temporada == temporada_seleccionada %}selected{% endif %}>
+	                {{ temporada }}
+	            </option>
+	        {% endfor %}
+	    </select>
+	</form>
+
+	<h2>Episodios de la Temporada {{ temporada_seleccionada }}</h2>
+	<table border="1">
+	    <thead>
+	        <tr>
+	            <th>Episodio</th>
+	            <th>imdbID</th>
+	            <th>Titulo</th>
+	            <th>Released</th>
+	            <th>imdbRating</th>
+	            <th></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+            {% for episodio in episodios_data %}
+                <tr>
+                    <td>{{ episodio.Episode }}</td>
+                    <td>{{ episodio.imdbID }}</td>
+                    <td>{{ episodio.Title}} </td>
+                    <td>{{ episodio.Released}}</td>
+                    <td>{{ episodio.imdbRating}}</td>
+                    <td>
+                        <form action="{% url 'detalle_episodio' episodio.imdbID %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name='titulo_serie' value='{{detalle_serie.title}}'>
+                            <button class="btn btn-dark">Ver detalle</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+	    </tbody>
+	</table>
+</main>
+
+{% endblock %}

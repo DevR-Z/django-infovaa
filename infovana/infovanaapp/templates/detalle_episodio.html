@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+	<h1>Detalle del episodio</h1>
+	<div>{{titulo_serie}} {{detalle_episodio.season}}x{{detalle_episodio.episode}} Titulo: {{detalle_episodio.title}}</div>
+	<img src="{{detalle_episodio.poster}}" alt="Poster">
+	<div>Sinopsis: {{detalle_episodio.plot}}</div>
+	<div>ImdbID Episodio: {{detalle_episodio.imdbID}}</div>
+	<div>Año de Lanzamiento: {{detalle_episodio.year}}</div>
+	<div>Genero: {{detalle_episodio.genre}}</div>
+	<div>Idioma: {{detalle_episodio.language}}</div>
+	<div>Rating: {{detalle_episodio.imdbRating}}</div>
+	<div>Runtime: {{detalle_episodio.runtime}}</div>
+	<div>Released: {{detalle_episodio.released}}</div>
+</main>
+{% endblock %}

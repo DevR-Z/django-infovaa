@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="ms-4">
+	<h1>{{detalle_episodio.imdbID_serie.imdbID.title}} {{detalle_episodio.season}}x{{detalle_episodio.episode}}</h1>
+	<h4>{{detalle_episodio.imdbID.title}}</h4>
+	<img src="{{detalle_episodio.imdbID.poster}}" alt="Poster">
+	<div>Sinopsis: {{detalle_episodio.imdbID.plot}}</div>
+	<div>ImdbID Episodio: {{detalle_episodio.imdbID.imdbID}}</div>
+	<div>Año de Lanzamiento: {{detalle_episodio.imdbID.year}}</div>
+	<div>Genero: {{detalle_episodio.imdbID.genre}}</div>
+	<div>Idioma: {{detalle_episodio.imdbID.language}}</div>
+	<div>Rating: {{detalle_episodio.imdbID.imdbRating}}</div>
+	<div>Runtime: {{detalle_episodio.runtime}}</div>
+	<div>Released: {{detalle_episodio.imdbID.released}}</div>
+	<form action="{% url 'detalle_serie_guardada' detalle_episodio.imdbID_serie.imdbID.imdbID %}" method="POST">
+		{% csrf_token %}
+		<button class="btn btn-secondary">Regresar</button>
+	</form>
+</main>
+{% endblock %}

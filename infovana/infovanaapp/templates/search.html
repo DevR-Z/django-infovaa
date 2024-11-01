@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container py5">
+    <div class="search">
+        <section class="card card-body mt-3">
+            <form action="{% url 'listado_peliculas' %}" method="POST">
+                {% csrf_token %}
+                <label for="movie" style="font-size: 40px;">Buscar pelicula:</label>
+                <div class="text-center">
+                    <input class="bg-dark" type="text" name="movie" id="movie" placeholder="Write movie to search" style="font-size: 40px; width: 100%; color:grey;">
+                    <button class="btn btn-secondary" style="font-size: 40px;">Buscar</button>
+                </div>
+            </form>
+        </section>
+        <section class="card card-body mt-3">
+            <form action="{% url 'listado_series' %}" method="POST">
+                {% csrf_token %}
+                <label for="serie" style="font-size: 40px;">Buscar Serie:</label>
+                <div class="text-center">
+                    <input class="bg-dark" type="text" name="serie" id="serie" placeholder="Write serie to search" style="font-size: 40px; width: 100%; color: grey;">
+                    <button class="btn btn-secondary" style="font-size: 40px;">Buscar</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

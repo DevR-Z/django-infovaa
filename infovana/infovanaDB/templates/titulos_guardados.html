@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="ms-4">
+	<h1>Bienvenido {{user.username}}</h1>
+	<h2 class="text-center">Peliculas Favoritas</h2>
+    <div class="container mt-2">
+        <div class="row">
+            {% for pelicula in peliculas_guardadas %}
+            <div class="col-md-2 mt-3">
+                <div class="card bg-dark text-white">
+                    <img src="{{pelicula.imdbID.poster}}" class="card-img-top" alt="{{pelicula.imdbID.title}}">
+                    <div class="card-body">
+                        <h6 class="card-title text-center">{{pelicula.imdbID.title}}</h6>
+                        <h7 class="card-text">Género: {{pelicula.imdbID.genre}}</h7>
+                        <div class="text-center">
+                            <form action="{% url 'detalle_pelicula_guardada' pelicula.imdbID.imdbID %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-secondary mt-1">Ver detalle</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+	<h2 class="text-center">Series favoritas</h2>
+    <div class="container mt-2">
+        <div class="row">
+            {% for serie in series_guardadas %}
+            <div class="col-md-2 mt-3">
+                <div class="card bg-dark text-white">
+                    <img src="{{serie.imdbID.poster}}" class="card-img-top" alt="{{serie.imdbID.title}}">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{serie.imdbID.title}}</h5>
+                        <h7 class="card-text">Género: {{serie.imdbID.genre}}</h7>
+                        <div class="text-center">
+                            <form action="{% url 'detalle_serie_guardada' serie.imdbID.imdbID %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-secondary mt-1">Ver detalle</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
